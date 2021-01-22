@@ -73,7 +73,7 @@ function LoginScreen({ navigation }) {
                                 }
     
                                 dataArr.push({name:result.results[i].name.capitalize(),abilities:abilities,stats:stats,types:types,base_experience:pokeDataJson.base_experience,
-                                    height:pokeDataJson.height,weight:pokeDataJson.weight,imgUrl:pokeDataJson.sprites.other['official-artwork'].front_default
+                                    height:pokeDataJson.height,weight:pokeDataJson.weight,imgUrl:pokeDataJson.sprites.other['official-artwork'].front_default,id:(i+1),idText:(i+1).toString()
                                 })
                             }
                             try {

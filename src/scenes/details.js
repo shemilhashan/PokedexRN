@@ -12,6 +12,7 @@ import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import { getCardColor } from '../utils'
 import CachedImage from '../components/cacheimage'
+import { SwipeablePanel } from 'rn-swipeable-panel';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     },
     detailsBox: {
         width: screenWidth,
-        height: screenHeight / 2,
+        height: screenHeight / 3,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row'
@@ -40,28 +41,31 @@ const styles = StyleSheet.create({
 
 
 export default function DetailsScreen({ navigation, route }) {
-    const { id,item,allData } = route.params
+    const { id, item, allData } = route.params
     const refFlatList = useRef(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            refFlatList?.current?.snapToItem(id-1)
-          }, 60)
+            refFlatList?.current?.snapToItem(id - 1)
+        }, 60)
         return () => clearTimeout(timeout)
     }, [refFlatList?.current]);
 
     function renderItem({ item, index }) {
         return (
-            <View style={[styles.slide,{backgroundColor: getCardColor(item.types[0].name)}]}>
+            <View style={[styles.slide, { backgroundColor: getCardColor(item.types[0].name) }]}>
                 <Text style={styles.caseTitle}>{item.name}</Text>
                 <View style={styles.detailsBox}>
-                    <CachedImage uri={ item.imgUrl } style={{ width: 200, height: 200 }} resizeMode='stretch'></CachedImage>
+                    <CachedImage uri={item.imgUrl} style={{ width: 200, height: 200 }} resizeMode='stretch'></CachedImage>
                 </View>
-                <View style={[styles.detailsBox,{borderTopLeftRadius:30,borderTopRightRadius:30,backgroundColor:'white'}]}>
+                <SwipeablePanel fullWidth={true} openLarge ={false} showCloseButton = {false} onClose={ () => {} } onPressCloseButton = {() => {}} isActive={true} noBackgroundOpacity={true}>
+                    <View style={[styles.detailsBox, { borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white' }]}>
 
-                    <Text style={styles.caseTitle}>Weight: {item&&item.weight?item.weight:0}</Text>
-                </View>
-                
+                        <Text style={styles.caseTitle}>Weight: {item && item.weight ? item.weight : 0}</Text>
+                    </View>
+                </SwipeablePanel>
+
+
             </View>
         );
     }

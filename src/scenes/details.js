@@ -11,6 +11,7 @@ import Carousel from 'react-native-snap-carousel';
 import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import { getCardColor } from '../utils'
+import CachedImage from '../components/cacheimage'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -54,7 +55,7 @@ export default function DetailsScreen({ navigation, route }) {
             <View style={[styles.slide,{backgroundColor: getCardColor(item.types[0].name)}]}>
                 <Text style={styles.caseTitle}>{item.name}</Text>
                 <View style={styles.detailsBox}>
-                    <Image source={{ uri: item&&item.imgUrl?item.imgUrl:'' }} style={{ width: 200, height: 200 }} resizeMode='stretch' PlaceholderContent={<ActivityIndicator />}></Image>
+                    <CachedImage uri={ item.imgUrl } style={{ width: 200, height: 200 }} resizeMode='stretch'></CachedImage>
                 </View>
                 <View style={[styles.detailsBox,{borderTopLeftRadius:30,borderTopRightRadius:30,backgroundColor:'white'}]}>
 

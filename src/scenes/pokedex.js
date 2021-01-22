@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { SearchBar } from 'react-native-elements';
 import { getCardColor } from '../utils'
 import images from '../assets/images'
+import CachedImage from '../components/cacheimage'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     tile: {
@@ -63,7 +64,7 @@ function PokedexScreen({ navigation }) {
                 </View>
                 <View style={{ flex: 3, justifyContent: 'center', alignContent: 'center' }}>
                     <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'white', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
-                    <Image source={{ uri: item.imgUrl }} style={{ width: '100%', height: '100%', zIndex: 2 }} resizeMode='contain'></Image>
+                    <CachedImage uri={item.imgUrl} style={{ width: '100%', height: '100%', zIndex: 2 }} resizeMode='contain'></CachedImage>
                 </View>
             </View>
         </TouchableOpacity>

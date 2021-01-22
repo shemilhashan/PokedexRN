@@ -135,7 +135,8 @@ function LoginScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
             <Image source={images.poke_app_icon} style={{ width: 100, height: 100 }}></Image>
-            <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'red', marginTop: 20, marginBottom: 10 }}>MY POKEDEX</Text>
+            <Image source={images.pokedextext} style={{ width: 300, height: 100,tintColor:'#da1b1b' }}></Image>
+            {/* <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'red', marginTop: 20, marginBottom: 10 }}>MY POKEDEX</Text> */}
 
             <Input
                 placeholder="Email"
@@ -155,7 +156,7 @@ function LoginScreen({ navigation }) {
             />
 
 
-            <Button title="Login" onPress={() => loginValidate()} raised={true} containerStyle={{ width: '70%', marginTop: 20 }} />
+            <Button title="Login" onPress={() => loginValidate()} raised={true} containerStyle={{ width: '70%', marginTop: 20 }} buttonStyle={{backgroundColor:'#da1b1b'}}/>
         </View>
     );
 }

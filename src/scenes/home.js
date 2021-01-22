@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
         { name: 'Pokedex', color: Colors.cardPokedex, fnToPress: () => { navigation.navigate('Pokedex') } },
         { name: 'My Pokemon', color: Colors.cardMy, fnToPress: () => { navigation.navigate('Mypokemon') } },
         { name: 'Account', color: Colors.cardAccount, fnToPress: () => { navigation.navigate('Account') } },
-        { name: 'Logout', color: Colors.cardLogout, fnToPress: () => { logOut() } },
+        { name: 'Logout', color: Colors.cardLogout, fnToPress: () => { logOut() } }
     ]
 
     const renderItem = ({ item, index }) => (
@@ -75,13 +75,15 @@ function HomeScreen({ navigation }) {
         }
     };
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'white' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'white',flexDirection:'column' }}>
+            <View style={{flex:1}}></View>
             <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={item => item.name}
-                style={{ width: '100%', backgroundColor: 'white', alignSelf:'center', marginTop:40 }}
+                style={{ width: '100%', backgroundColor: 'white', alignSelf:'center', height:350}}
             />
+            <View style={{flex:1}}></View>
         </View>
     );
 }

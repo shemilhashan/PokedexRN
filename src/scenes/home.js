@@ -5,12 +5,14 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    Dimensions
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage'
 import { Button } from 'react-native-elements';
 import * as Colors from '../styles/colors'
-
+import images from '../assets/images'
+const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     tile: {
         marginTop: 10,
@@ -25,10 +27,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
         backgroundColor: '#fff',
-        elevation: 2, // Android
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
+        elevation: 2, // Android,
+        overflow:'hidden',
+        justifyContent:'center'
     },
     name: {
         position: 'absolute',
@@ -40,10 +41,6 @@ const styles = StyleSheet.create({
         zIndex: 10
     }
 });
-
-String.prototype.capitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1)
-}
 
 
 function HomeScreen({ navigation }) {
@@ -57,6 +54,8 @@ function HomeScreen({ navigation }) {
 
     const renderItem = ({ item, index }) => (
         <TouchableOpacity style={[styles.tile,{ backgroundColor:item.color }]} onPress={() => item.fnToPress()}>
+            <Image source={images.pokeball} resizeMode='contain' style={{position:'absolute',height:120,width:120,tintColor:'white',opacity:0.5,top:-65,marginLeft:-90}}></Image>
+            <Image source={images.pokeball} resizeMode='contain' style={{position:'absolute',height:120,width:120,tintColor:'white',opacity:0.5,marginTop:-10,marginLeft:screenWidth*0.8-100}}></Image>
             <Text style={styles.name}>{item.name.capitalize()}</Text>
         </TouchableOpacity>
         // <View style={[styles.tile, { backgroundColor: item.color, width: '100%', marginLeft: 0 }]}>

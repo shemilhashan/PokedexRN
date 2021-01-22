@@ -10,16 +10,16 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
-
+import { getCardColor } from '../utils'
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 const styles = StyleSheet.create({
     slide: {
         height: screenHeight,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 25
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: 0
     },
     caseTitle: {
         height: 30,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     detailsBox: {
-        width: screenWidth * 2 / 3,
+        width: screenWidth,
         height: screenHeight / 2,
         alignItems: 'center',
         justifyContent: 'center',
@@ -39,110 +39,43 @@ const styles = StyleSheet.create({
 
 
 export default function DetailsScreen({ navigation, route }) {
-    const { item, allData } = route.params
-    const [id, setId] = useState(route.params.id);
-    const [idUrl, setIdUrl] = useState(item.url);
-    const [name, setName] = useState(item.name);
-    const [data, setData] = useState([]);
-    const [initialLoad, setInitialLoad] = useState(true)
+    const { id,item,allData } = route.params
     const refFlatList = useRef(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             refFlatList?.current?.snapToItem(id-1)
           }, 60)
-        if (idUrl && !allData[id-1].data) {
-            fetch(idUrl)
-                .then((response) => {
-                    response.json().then((result)=>{
-                            // console.log('poke data: ',result)
-                            let data = { weight: result.weight,imageUrl: result.sprites.other['official-artwork']['front_default']}
-                            var currentData = allData[id-1]
-                            currentData['data'] = data
-                            allData[id-1] = currentData
-
-                        }
-                    );
-                })
-                .catch((error) => {
-                    console.log('Error', error);
-                });
-        }
-        if (idUrl && id <= allData.length-1 && !allData[id].data) {
-            fetch(allData[id].url)
-                .then((response) => {
-                    response.json().then((result)=>{
-                            // console.log('poke data: ',result)
-                            let data = { weight: result.weight,imageUrl: result.sprites.other['official-artwork']['front_default']}
-                            var currentData = allData[id]
-                            currentData['data'] = data
-                            allData[id] = currentData
-
-                        }
-                    );
-                })
-                .catch((error) => {
-                    console.log('Error', error);
-                });
-        }
-        if (idUrl && id-2>=0 && !allData[id-2].data) {
-            fetch(allData[id-2].url)
-                .then((response) => {
-                    response.json().then((result)=>{
-                            // console.log('poke data: ',result)
-                            let data = { weight: result.weight,imageUrl: result.sprites.other['official-artwork']['front_default']}
-                            var currentData = allData[id-2]
-                            currentData['data'] = data
-                            allData[id-2] = currentData
-
-                        }
-                    );
-                })
-                .catch((error) => {
-                    console.log('Error', error);
-                });
-        }
         return () => clearTimeout(timeout)
-    }, [refFlatList?.current,id]);
+    }, [refFlatList?.current]);
 
-    if (data === null) {
-        return <Text>Loading...</Text>;
-    }
-// /uri: data&&data.sprites&&data.sprites.other['official-artwork']['front_default']?data.sprites.other['official-artwork']['front_default']:'https://pokeres.bastionbot.org/images/pokemon/1.png',
     function renderItem({ item, index }) {
-        // console.log('item: ',item)
         return (
-            <View style={styles.slide}>
-                <Text style={styles.caseTitle}>{item.name.capitalize()}</Text>
+            <View style={[styles.slide,{backgroundColor: getCardColor(item.types[0].name)}]}>
+                <Text style={styles.caseTitle}>{item.name}</Text>
                 <View style={styles.detailsBox}>
-                    <Image source={{ uri: item.data&&item.data.imageUrl?item.data.imageUrl:'' }} style={{ width: 200, height: 200 }} resizeMode='stretch' PlaceholderContent={<ActivityIndicator />}></Image>
+                    <Image source={{ uri: item&&item.imgUrl?item.imgUrl:'' }} style={{ width: 200, height: 200 }} resizeMode='stretch' PlaceholderContent={<ActivityIndicator />}></Image>
                 </View>
-                <Text style={styles.caseTitle}>Weight: {item.data&&item.data.weight?item.data.weight:0}</Text>
+                <View style={[styles.detailsBox,{borderTopLeftRadius:30,borderTopRightRadius:30,backgroundColor:'white'}]}>
+
+                    <Text style={styles.caseTitle}>Weight: {item&&item.weight?item.weight:0}</Text>
+                </View>
+                
             </View>
         );
     }
 
-    function onSnapToItem(index) {
-        console.log('index: ', index)
-        setId(index+1)
-        setIdUrl(allData[index].url)
-        setName(allData[index].name)
-    }
-
-
     return (
         <View>
-
             <Carousel
                 data={allData}
                 renderItem={renderItem}
                 sliderWidth={screenWidth}
-                itemWidth={screenWidth * 2 / 3}
+                itemWidth={screenWidth}
                 inactiveSlideShift={0}
                 layout={'default'}
-                inactiveSlideScale={0.5}
-                layoutCardOffset={10}
-                onSnapToItem={onSnapToItem}
+                inactiveSlideScale={1.0}
+                layoutCardOffset={0}
                 ref={refFlatList}
                 keyExtractor={(item, index) => item.name}
             />

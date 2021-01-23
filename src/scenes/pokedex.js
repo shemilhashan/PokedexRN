@@ -48,10 +48,12 @@ function PokedexScreen({ navigation }) {
 
     const [data, setData] = useState([]);
     const [allData, setAllData] = useState([]);
+    const [evoData, setEvoData] = useState([])
+    const [speciesData, setSpeciesData] = useState([])
     const [searchText, setSearchText] = useState('');
-
+    
     const renderItem = ({ item, index }) => (
-        <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 == 0 ? '1%' : '4%', marginLeft: index % 2 == 0 ? '4%' : '1%' }]} onPress={() => navigation.navigate('DetailsAlt', { item: item, allData: allData, id: index + 1 })}>
+        <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 == 0 ? '1%' : '4%', marginLeft: index % 2 == 0 ? '4%' : '1%' }]} onPress={() => navigation.navigate('DetailsAlt', { item: item, allData: allData, id: index + 1, evoData:evoData, speciesData:speciesData })}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Text style={styles.name}>{item.name}</Text>
                 <View style={{ width: 40, flexDirection: 'column', position: 'absolute', top: 15, right: 5, alignContent: 'center', alignItems: 'center', justifyContent: 'center' }}><Text style={{ flex: 1, color: 'grey', fontWeight: 'bold' }}>#{item.id < 10 ? `00${item.id}` : item.id < 100 ? `0${item.id}` : `${item.id}`}</Text></View>
@@ -75,13 +77,31 @@ function PokedexScreen({ navigation }) {
 
             try {
                 let pokeData = await AsyncStorage.getItem('pokeData') || 'none';
-                console.log('pokeData: ', pokeData)
+                // console.log('pokeData: ', pokeData)
                 if (pokeData && pokeData != 'none') {
                     //set redux state if needed
                     let pokeDataLoaded = JSON.parse(pokeData);
-                    console.log('pokeDataLoaded: ', pokeDataLoaded)
+                    // console.log('pokeDataLoaded: ', pokeDataLoaded)
                     setData(pokeDataLoaded.data)
                     setAllData(pokeDataLoaded.data)
+                }
+
+                let evoData = await AsyncStorage.getItem('evoData') || 'none';
+                // console.log('evoData: ', evoData)
+                if (evoData && evoData != 'none') {
+                    //set redux state if needed
+                    let evoDataLoaded = JSON.parse(evoData);
+                    // console.log('evoDataLoaded: ', evoDataLoaded)
+                    setEvoData(evoDataLoaded.data)
+                }
+
+                let speciesData = await AsyncStorage.getItem('speciesData') || 'none';
+                // console.log('speciesData: ', speciesData)
+                if (speciesData && speciesData != 'none') {
+                    //set redux state if needed
+                    let speciesDataLoaded = JSON.parse(speciesData);
+                    // console.log('speciesDataLoaded: ', speciesDataLoaded)
+                    setSpeciesData(speciesDataLoaded.data)
                 }
             } catch (error) {
                 // Error retrieving data

@@ -1,6 +1,6 @@
 import { FileSystem,Constants } from 'react-native-unimodules';
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image,Animated } from 'react-native';
 import shorthash from 'shorthash';
 
 function CachedImage(props) {
@@ -30,8 +30,8 @@ function CachedImage(props) {
     }, [])
 
     return (
-        <Image {...props} source={source}>
-        </Image>
+        <Animated.Image {...props} source={source}>
+        </Animated.Image>
     );
 }
 

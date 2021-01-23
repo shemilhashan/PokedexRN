@@ -51,7 +51,7 @@ function PokedexScreen({ navigation }) {
     const [searchText, setSearchText] = useState('');
 
     const renderItem = ({ item, index }) => (
-        <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 == 0 ? '1%' : '4%', marginLeft: index % 2 == 0 ? '4%' : '1%' }]} onPress={() => navigation.navigate('Details', { item: item, allData: allData, id: index + 1 })}>
+        <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 == 0 ? '1%' : '4%', marginLeft: index % 2 == 0 ? '4%' : '1%' }]} onPress={() => navigation.navigate('DetailsAlt', { item: item, allData: allData, id: index + 1 })}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Text style={styles.name}>{item.name}</Text>
                 <View style={{ width: 40, flexDirection: 'column', position: 'absolute', top: 15, right: 5, alignContent: 'center', alignItems: 'center', justifyContent: 'center' }}><Text style={{ flex: 1, color: 'grey', fontWeight: 'bold' }}>#{item.id < 10 ? `00${item.id}` : item.id < 100 ? `0${item.id}` : `${item.id}`}</Text></View>

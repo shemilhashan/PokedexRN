@@ -11,7 +11,7 @@ import Carousel from 'react-native-snap-carousel';
 import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import { getCardColor } from '../utils'
-import CachedImage from '../components/cacheimage'
+import CarouselItem from '../components/carouselitem'
 import { SwipeablePanel } from 'rn-swipeable-panel';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
@@ -43,30 +43,23 @@ const styles = StyleSheet.create({
 export default function DetailsScreen({ navigation, route }) {
     const { id, item, allData } = route.params
     const refFlatList = useRef(null);
+    const [temp, setTemp] = useState(0)
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            refFlatList?.current?.snapToItem(id - 1)
-        }, 60)
-        return () => clearTimeout(timeout)
-    }, [refFlatList?.current]);
+            refFlatList?.current?.snapToItem(id-1)
+            setTemp(temp+1)
+        }, 1000)
+        // for(let i=0; i < id; i++){
+        //     refFlatList?.current?.snapToNext()
+        // }
+        
+        return () => {clearTimeout(timeout)}
+    }, []);
 
     function renderItem({ item, index }) {
         return (
-            <View style={[styles.slide, { backgroundColor: getCardColor(item.types[0].name) }]}>
-                <Text style={styles.caseTitle}>{item.name}</Text>
-                <View style={styles.detailsBox}>
-                    <CachedImage uri={item.imgUrl} style={{ width: 200, height: 200 }} resizeMode='stretch'></CachedImage>
-                </View>
-                <SwipeablePanel fullWidth={true} openLarge ={false} showCloseButton = {false} onClose={ () => {} } onPressCloseButton = {() => {}} isActive={true} noBackgroundOpacity={true}>
-                    <View style={[styles.detailsBox, { borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white' }]}>
-
-                        <Text style={styles.caseTitle}>Weight: {item && item.weight ? item.weight : 0}</Text>
-                    </View>
-                </SwipeablePanel>
-
-
-            </View>
+            <CarouselItem item={item}></CarouselItem>
         );
     }
 

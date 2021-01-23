@@ -52,9 +52,9 @@ function CachedImage(props) {
 
     return (
         <View>
-            <Animated.Image
+            {props.showSpin?<Animated.Image
                 style={[{ transform: [{ rotate: spin }] },{ zIndex: 1, width: '70%', height: '70%', position: 'absolute', tintColor: 'white', opacity: 0.3, top:'15%',left:'15%' }]}
-                source={images.pokeball} />
+                source={images.pokeball} />:null}
             <Animated.Image {...props} source={source} style={[props.style, { zIndex: 10 }]}>
             </Animated.Image>
         </View>

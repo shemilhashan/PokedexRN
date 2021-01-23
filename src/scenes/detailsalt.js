@@ -323,6 +323,7 @@ export default function DetailAltScreen({ navigation, route }) {
                             <Animated.View style={[styles.item, { transform: [{ scale }] }]}>
                                 <View style={styles.imageWrapper}>
                                     <CachedImage
+                                        showSpin={true}
                                         uri={allData[item - 1].imgUrl}
                                         resizeMethod="auto"
                                         resizeMode="contain"
@@ -330,6 +331,7 @@ export default function DetailAltScreen({ navigation, route }) {
                                     />
                                 </View>
                                 <CachedImage
+                                    showSpin={true}
                                     uri={allData[item - 1].imgUrl}
                                     resizeMethod="auto"
                                     resizeMode="contain"

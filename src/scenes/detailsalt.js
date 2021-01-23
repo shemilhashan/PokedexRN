@@ -7,7 +7,8 @@ import {
     Animated,
     Dimensions,
     TouchableOpacity,
-    Image
+    Image,
+    Easing
 } from 'react-native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
@@ -93,6 +94,7 @@ export default function DetailAltScreen({ navigation, route }) {
     const itemWidth = width * 0.65;
     const spacerWidth = (width - itemWidth) / 2;
     const refFlatList = useRef(null);
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             refFlatList?.current?.scrollToIndex({ animated: false, index: id - 1 })
@@ -105,7 +107,7 @@ export default function DetailAltScreen({ navigation, route }) {
         arr.push(-1)
         setIdArr(arr)
 
-        // return () => {clearTimeout(timeout)}
+        return () => { clearTimeout(timeout) }
     }, [refFlatList?.current]);
 
     //   if (data === null) {
@@ -140,7 +142,7 @@ export default function DetailAltScreen({ navigation, route }) {
 
     const About = () => (
         <View style={[styles.scene, { backgroundColor: 'white' }]} >
-            <Text>{speciesData[currentId-1].aboutText.replace('\n',' ')}</Text>
+            <Text>{speciesData[currentId - 1].aboutText.replace('\n', ' ')}</Text>
         </View>
     );
 
@@ -150,7 +152,7 @@ export default function DetailAltScreen({ navigation, route }) {
 
     const Evolution = () => (
         <View style={[styles.scene, { backgroundColor: 'white' }]} >
-            <Text>{speciesData[currentId-1].evoID}</Text>
+            <Text>{speciesData[currentId - 1].evoID}</Text>
         </View>
     );
 
@@ -172,10 +174,10 @@ export default function DetailAltScreen({ navigation, route }) {
     }
 
     function topContent() {
-        if (enableList){
+        if (enableList) {
             return (
                 <Animated.View style={{ position: 'absolute', width: screenWidth, height: 200, backgroundColor: 'transparent', zIndex: 10, flexDirection: 'column' }}>
-    
+
                     <View style={{ flex: 1, flexDirection: 'column', marginBottom: 0 }}>
                         <View style={{ flex: 1, flexDirection: 'row' }}></View>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 0 }}>
@@ -216,7 +218,7 @@ export default function DetailAltScreen({ navigation, route }) {
         else {
             return (
                 <Animated.View style={{ position: 'absolute', width: screenWidth, height: 200, backgroundColor: 'transparent', zIndex: 10, flexDirection: 'column' }}>
-    
+
                     <View style={{ flex: 1, flexDirection: 'column', marginBottom: 0 }}>
                         <View style={{ flex: 1, flexDirection: 'row' }}></View>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 0 }}>

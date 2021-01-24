@@ -36,11 +36,11 @@ function LoginScreen({ navigation }) {
         const getLoggedIn = async () => {
             try {
                 let pokeData = await AsyncStorage.getItem('pokeData') || 'none';
-                console.log('pokeData: ', pokeData)
+                // console.log('pokeData: ', pokeData)
                 if (pokeData && pokeData != 'none') {
                     //set redux state if needed
-                    let pokeDataLoaded = JSON.parse(pokeData);
-                    console.log('pokeDataLoaded: ', pokeDataLoaded)
+                    // let pokeDataLoaded = JSON.parse(pokeData);
+                    // console.log('pokeDataLoaded: ', pokeDataLoaded)
                 }
                 else {
                     fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
@@ -52,12 +52,6 @@ function LoginScreen({ navigation }) {
                                     let urlFetch = result.results[i].url
                                     let pokeData = await fetch(urlFetch)
                                     let pokeDataJson = await pokeData.json()
-
-                                    let pokeSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${i + 1}/`)
-                                    let pokeSpeciesJson = await pokeSpecies.json()
-                                    let evoChainUrl = pokeSpeciesJson.evolution_chain.url
-                                    let evoArr = evoChainUrl.split('/')
-                                    let evoID = parseInt(evoArr[evoArr.length - 2]) - 1
 
                                     let abilities = []
                                     for (let abI = 0; abI < pokeDataJson.abilities.length; abI++) {
@@ -78,41 +72,12 @@ function LoginScreen({ navigation }) {
                                     }
                                     dataArr.push({
                                         name: result.results[i].name.capitalize(), abilities: abilities, stats: stats, types: types, base_experience: pokeDataJson.base_experience,
-                                        height: pokeDataJson.height, weight: pokeDataJson.weight, imgUrl: pokeDataJson.sprites.other['official-artwork'].front_default, id: (i + 1), idText: (i + 1).toString(),
-                                        aboutText: pokeSpeciesJson.flavor_text_entries[0].flavor_text, base_happiness: pokeSpeciesJson.base_happiness, capture_rate: pokeSpeciesJson.capture_rate,
-                                        generation: pokeSpeciesJson.generation.name, growth_rate: pokeSpeciesJson.growth_rate.name, habitat: pokeSpeciesJson.habitat.name, has_gender_differences: pokeSpeciesJson.has_gender_differences,
-                                        gender_rate: pokeSpeciesJson.gender_rate, evoID: evoID
+                                        height: pokeDataJson.height, weight: pokeDataJson.weight, imgUrl: pokeDataJson.sprites.other['official-artwork'].front_default, id: (i + 1), idText: (i + 1).toString()
                                     })
                                 }
                                 try {
                                     const pokeData = await JSON.stringify({ data: dataArr })
                                     await AsyncStorage.setItem('pokeData', pokeData);
-
-                                    let speciesArr = []
-                                    for (let i = 0; i < 151; i++) {
-                                        let pokeSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${i + 1}/`)
-                                        let pokeSpeciesJson = await pokeSpecies.json()
-                                        let evoChainUrl = pokeSpeciesJson.evolution_chain.url
-                                        let evoArr = evoChainUrl.split('/')
-                                        let evoID = parseInt(evoArr[evoArr.length - 2]) - 1
-                                        var aboutText = pokeSpeciesJson.flavor_text_entries[0].flavor_text
-                                        aboutText = aboutText.replace(/(\r\n|\n|\r)/gm, " ")
-                                        speciesArr.push({
-                                            aboutText: aboutText, base_happiness: pokeSpeciesJson.base_happiness, capture_rate: pokeSpeciesJson.capture_rate,
-                                            generation: pokeSpeciesJson.generation.name, growth_rate: pokeSpeciesJson.growth_rate.name, habitat: pokeSpeciesJson.habitat.name, has_gender_differences: pokeSpeciesJson.has_gender_differences,
-                                            gender_rate: pokeSpeciesJson.gender_rate, evoID: evoID
-                                        })
-                                    }
-
-                                    try {
-                                        const speciesData = await JSON.stringify({ data: speciesArr })
-                                        await AsyncStorage.setItem('speciesData', speciesData);
-
-                                        evoChains()
-                                    } catch (error) {
-                                        // Error retrieving data
-                                        console.log(error.message);
-                                    }
 
                                 } catch (error) {
                                     // Error retrieving data
@@ -141,15 +106,15 @@ function LoginScreen({ navigation }) {
                 console.log(error.message);
             }
         }
-        const evoChains = async () => {
+        const evolutions = async () => {
 
             try {
                 let evoDataAsync = await AsyncStorage.getItem('evoData') || 'none';
-                console.log('evoDataAsync: ', evoDataAsync)
+                // console.log('evoDataAsync: ', evoDataAsync)
                 if (evoDataAsync && evoDataAsync != 'none') {
                     //set redux state if needed
-                    let evoDataAsyncLoaded = JSON.parse(evoDataAsync);
-                    console.log('evoDataAsyncLoaded: ', evoDataAsyncLoaded)
+                    // let evoDataAsyncLoaded = JSON.parse(evoDataAsync);
+                    // console.log('evoDataAsyncLoaded: ', evoDataAsyncLoaded)
                 }
                 else {
 
@@ -197,7 +162,52 @@ function LoginScreen({ navigation }) {
 
 
         }
+        const species = async () => {
+
+            try {
+                let speciesDataAsync = await AsyncStorage.getItem('speciesData') || 'none';
+                // console.log('speciesDataAsync: ', speciesDataAsync)
+                if (speciesDataAsync && speciesDataAsync != 'none') {
+                    //set redux state if needed
+                    // let speciesDataAsyncLoaded = JSON.parse(speciesDataAsync);
+                    // console.log('speciesDataAsyncLoaded: ', speciesDataAsyncLoaded)
+                }
+                else {
+                    let speciesArr = []
+                    for (let i = 0; i < 151; i++) {
+                        let pokeSpecies = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${i + 1}/`)
+                        let pokeSpeciesJson = await pokeSpecies.json()
+                        let evoChainUrl = pokeSpeciesJson.evolution_chain.url
+                        let evoArr = evoChainUrl.split('/')
+                        let evoID = parseInt(evoArr[evoArr.length - 2]) - 1
+                        var aboutText = pokeSpeciesJson.flavor_text_entries[0].flavor_text
+                        aboutText = aboutText.replace(/(\r\n|\n|\r)/gm, " ")
+                        speciesArr.push({
+                            aboutText: aboutText, base_happiness: pokeSpeciesJson.base_happiness, capture_rate: pokeSpeciesJson.capture_rate,
+                            generation: pokeSpeciesJson.generation.name, growth_rate: pokeSpeciesJson.growth_rate.name, habitat: pokeSpeciesJson.habitat.name, has_gender_differences: pokeSpeciesJson.has_gender_differences,
+                            gender_rate: pokeSpeciesJson.gender_rate, evoID: evoID, egg_groups: pokeSpeciesJson.egg_groups
+                        })
+                    }
+
+                    try {
+                        const speciesData = await JSON.stringify({ data: speciesArr })
+                        await AsyncStorage.setItem('speciesData', speciesData);
+                    } catch (error) {
+                        // Error retrieving data
+                        console.log(error.message);
+                    }
+                }
+
+            } catch (error) {
+                // Error retrieving data
+                console.log(error.message);
+            }
+
+
+        }
         getLoggedIn()
+        evolutions()
+        species()
     }, [])
 
     const createAlert = () =>

@@ -5,6 +5,8 @@ const images = {
     backarrow:require('./backarrow.png'),
     heart:require('./heart.png'),
     heartline:require('./heartline.png'),
+    male:require('./male.png'),
+    female:require('./female.png'),
     
 }
 

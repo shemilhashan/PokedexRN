@@ -130,7 +130,7 @@ function LoginScreen({ navigation }) {
                             let firstStart = firstStartArr[firstStartArr.length - 2]
                             let firstEndArr = pokeEvolutionJson.chain.evolves_to[0].species.url.split('/')
                             let firstEnd = firstEndArr[firstEndArr.length - 2]
-                            let evo1 = { start: parseInt(firstStart), levels: pokeEvolutionJson.chain.evolves_to[0].evolution_details[0].min_level, end: parseInt(firstEnd) }
+                            let evo1 = { start: parseInt(firstStart),startName:pokeEvolutionJson.chain.species.name.capitalize(),endName:pokeEvolutionJson.chain.evolves_to[0].species.name.capitalize(), levels: pokeEvolutionJson.chain.evolves_to[0].evolution_details[0].min_level, end: parseInt(firstEnd) }
                             evoData.push(evo1)
                             if (pokeEvolutionJson.chain.evolves_to[0] && pokeEvolutionJson.chain.evolves_to[0].evolves_to.length > 0) {
                                 let second = pokeEvolutionJson.chain.evolves_to[0]
@@ -138,7 +138,7 @@ function LoginScreen({ navigation }) {
                                 let secondStart = secondStartArr[secondStartArr.length - 2]
                                 let secondEndArr = second.evolves_to[0].species.url.split('/')
                                 let secondEnd = secondEndArr[secondEndArr.length - 2]
-                                let evo2 = { start: parseInt(secondStart), levels: second.evolves_to[0].evolution_details[0].min_level, end: parseInt(secondEnd) }
+                                let evo2 = { start: parseInt(secondStart),startName:second.species.name.capitalize(),endName:second.evolves_to[0].species.name.capitalize(), levels: second.evolves_to[0].evolution_details[0].min_level, end: parseInt(secondEnd) }
                                 evoData.push(evo2)
                             }
                         }

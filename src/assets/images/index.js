@@ -7,7 +7,7 @@ const images = {
     heartline:require('./heartline.png'),
     male:require('./male.png'),
     female:require('./female.png'),
-    
+    frontarrow:require('./frontarrow.png'),
 }
 
 export default images;

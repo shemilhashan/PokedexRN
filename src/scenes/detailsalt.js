@@ -160,12 +160,12 @@ export default function DetailAltScreen({ navigation, route }) {
     );
 
     function getHeightConversions(height) {
-        let ft = (height / 3).toFixed(0)
+        let ft = (Math.floor(height / 3)).toFixed(0)
         let inches = (((height * 10) % 30) / 2.5).toFixed(2)
         return `${ft}' ${inches}" (${height * 10} cm)`
     }
     function getWeightConversions(weight) {
-        let kg = weight * 0.45
+        let kg = (weight * 0.45).toFixed(2)
         return `${weight} lbs (${kg} kg)`
     }
 
@@ -176,6 +176,13 @@ export default function DetailAltScreen({ navigation, route }) {
         }
         eggStr = eggStr + eggArr[eggArr.length - 1].name.capitalize()
         return eggStr
+    }
+
+    function getMale(ratio) {
+        return (ratio * 100 / (ratio + 1)).toFixed(2)
+    }
+    function getFemale(ratio) {
+        return (100 / (ratio + 1)).toFixed(2)
     }
 
     const About = () => (
@@ -210,11 +217,11 @@ export default function DetailAltScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', flex: 1 }}>
                         <View style={{ flexDirection: 'row', width: 100, justifyContent: 'flex-start' }}>
                             <Image source={images.male} style={{ width: 20, height: 20, marginRight: 5 }} resizeMode='contain'></Image>
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>87.5%</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{getMale(speciesData[currentId - 1].gender_rate)}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', width: 100, justifyContent: 'flex-start' }}>
                             <Image source={images.female} style={{ width: 20, height: 20, marginRight: 5 }} resizeMode='contain'></Image>
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>12.5%</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{getFemale(speciesData[currentId - 1].gender_rate)}</Text>
                         </View>
                     </View>
                 </View>
@@ -226,19 +233,88 @@ export default function DetailAltScreen({ navigation, route }) {
         </View>
     );
 
-    const Stats = () => (
-        <View style={[styles.scene, { backgroundColor: 'white' }]} ></View>
-    );
+    function Stats() {
+        let dataLoaded = allData[currentId - 1]
+        let speciesLoaded = speciesData[currentId - 1]
+        const baseList = dataLoaded.stats.map((stat) => {
+            return (
+                <View style={{flexDirection:'row',paddingLeft:20,marginTop:5,marginBottom:5}}>
+                    <Text style={{flex:4,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>{stat.name}</Text>
+                    <Text style={{flex:1,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>{stat.value}</Text>
+                    <View style={{flex:8,justifyContent:'center',alignItems:'center',alignContent:'center'}}>
+                        {getProgress(stat.value,100)}
+                    </View>
+                    <View style={{width:20}}></View>
+                </View>
+            )
+        })
+
+        function otherStat(name,value){
+            return (<View style={{flexDirection:'row',paddingLeft:20,marginTop:5,marginBottom:5}}>
+                    <Text style={{flex:4,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>{name}</Text>
+                    <Text style={{flex:9,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>{value}</Text>
+                    <View style={{width:20}}></View>
+                </View>)
+        }
+
+        function total(){
+            let statArr = dataLoaded.stats
+            var totalToDivide = 0
+            var total = 0
+
+            for (let i=0;i<statArr.length;i++){
+                totalToDivide += 100
+                total += statArr[i].value
+            }
+
+            return (
+                <View style={{flexDirection:'row',paddingLeft:20,marginTop:5,marginBottom:5}}>
+                    <Text style={{flex:4,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>Total</Text>
+                    <Text style={{flex:1,textAlign:'left',fontWeight:'bold',marginRight:5,color:'grey'}}>{total}</Text>
+                    <View style={{flex:8,justifyContent:'center',alignItems:'center',alignContent:'center'}}>
+                        {getProgress(total,totalToDivide)}
+                    </View>
+                    <View style={{width:20}}></View>
+                </View>
+            )
+        }
+
+        return (
+            <View style={[styles.scene, { backgroundColor: 'white' }]} >
+                <Text style={{paddingLeft:20,marginBottom:10,marginTop:20,fontWeight:'bold',fontSize:17}}>Base Stats</Text>
+                {baseList}
+                {total()}
+                <Text style={{paddingLeft:20,marginBottom:10,marginTop:20,fontWeight:'bold',fontSize:17}}>Other Stats</Text>
+                {otherStat('Experience',dataLoaded.base_experience)}
+                {otherStat('Happiness',speciesLoaded.base_happiness)}
+                {otherStat('Capture Rate',speciesLoaded.capture_rate)}
+                {otherStat('Generation',speciesLoaded.generation.capitalize())}
+                {otherStat('Growth Rate',speciesLoaded.growth_rate.capitalize())}
+                {otherStat('Habitat',speciesLoaded.habitat.capitalize())}
+            </View>
+        )
+
+    }
+
     const imgCommon = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
+
+    function getProgress(stat,total) {
+        return (
+            <View style={{width:'100%',height:4,flexDirection:'row',borderRadius:2,overflow:'hidden'}}>
+                <View style={{flex:stat,height:4,backgroundColor:(stat/total >= 0.5)?'green':'red'}}></View>
+                <View style={{flex:(total-stat),height:4,backgroundColor:'grey'}}></View>
+            </View>
+        )
+    }
 
     function Evolution() {
         let evoArr = evoData[speciesData[currentId - 1].evoID]
-        let firstEvo = evoArr.length > 0?evoArr[0]:false
-        let secondEvo = evoArr.length > 1?evoArr[1]:false
+        let firstEvo = evoArr.length > 0 ? evoArr[0] : false
+        let secondEvo = evoArr.length > 1 ? evoArr[1] : false
         let currentData = allData[currentId - 1]
         return (
             <View style={[styles.scene, { backgroundColor: 'white', flexDirection: 'column' }]} >
-                <Text style={{paddingLeft:20,marginTop:20,marginBottom:0,color:'black',fontWeight:'bold',fontSize:17}}>Evolution Chain</Text>
+                <Text style={{ paddingLeft: 20, marginTop: 20, marginBottom: 0, color: 'black', fontWeight: 'bold', fontSize: 17 }}>Evolution Chain</Text>
                 {
                     !firstEvo ?
                         <View style={{ width: screenWidth, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
@@ -249,39 +325,39 @@ export default function DetailAltScreen({ navigation, route }) {
                         :
                         <View style={{ width: screenWidth, height: 300, flexDirection: 'column' }}>
                             <View style={{ flexDirection: 'row', height: 150, justifyContent: 'center' }}>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
                                     <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
                                     <Image source={{ uri: `${imgCommon}${firstEvo.start}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
                                     <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{firstEvo.startName}</Text>
                                 </View>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
                                     <Image source={images.frontarrow} style={{ width: 50, height: 25 }} resizeMode='contain'></Image>
-                                    <Text style={{fontSize:15,fontWeight:'bold'}}>Lvl. {firstEvo.levels}</Text>
+                                    <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Lvl. {firstEvo.levels}</Text>
                                 </View>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
-                                <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
+                                <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                    <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
                                     <Image source={{ uri: `${imgCommon}${firstEvo.end}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
                                     <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{firstEvo.endName}</Text>
                                 </View>
                             </View>
                             {
-                                secondEvo?
-                                <View style={{ flexDirection: 'row', height: 150, justifyContent: 'center' }}>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
-                                <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
-                                    <Image source={{ uri: `${imgCommon}${secondEvo.start}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{secondEvo.startName}</Text>
-                                </View>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
-                                    <Image source={images.frontarrow} style={{ width: 50, height: 25 }} resizeMode='contain'></Image>
-                                    <Text style={{fontSize:15,fontWeight:'bold'}}>Lvl. {secondEvo.levels}</Text>
-                                </View>
-                                <View style={{ width: screenWidth*0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
-                                    <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
-                                    <Image source={{ uri: `${imgCommon}${secondEvo.end}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{secondEvo.endName}</Text>
-                                </View>
-                            </View> : null
+                                secondEvo ?
+                                    <View style={{ flexDirection: 'row', height: 150, justifyContent: 'center' }}>
+                                        <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                            <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
+                                            <Image source={{ uri: `${imgCommon}${secondEvo.start}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
+                                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{secondEvo.startName}</Text>
+                                        </View>
+                                        <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                            <Image source={images.frontarrow} style={{ width: 50, height: 25 }} resizeMode='contain'></Image>
+                                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Lvl. {secondEvo.levels}</Text>
+                                        </View>
+                                        <View style={{ width: screenWidth * 0.3, height: 150, justifyContent: 'center', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
+                                            <Image source={images.pokeball} resizeMode='contain' style={{ position: 'absolute', height: 100, width: 100, tintColor: 'grey', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1 }}></Image>
+                                            <Image source={{ uri: `${imgCommon}${secondEvo.end}.png` }} style={{ width: 100, height: 100 }} resizeMode='contain'></Image>
+                                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{secondEvo.endName}</Text>
+                                        </View>
+                                    </View> : null
                             }
                         </View>
                 }

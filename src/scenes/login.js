@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, Image, Alert} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, Alert } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import images from '../assets/images';
 
-import {Input} from 'react-native-elements';
-import {Button} from 'react-native-elements';
+import { Input } from 'react-native-elements';
+import { Button } from 'react-native-elements';
+
+import ReactNativeBiometrics from 'react-native-biometrics'
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-function LoginScreen({navigation}) {
+function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -74,7 +76,7 @@ function LoginScreen({navigation}) {
                     });
                   }
                   dataArr.push({
-                    id:i+1,
+                    id: i + 1,
                     name: result.results[i].name.capitalize(),
                     abilities: abilities,
                     stats: stats,
@@ -90,7 +92,7 @@ function LoginScreen({navigation}) {
                   });
                 }
                 try {
-                  const pokeData = await JSON.stringify({data: dataArr});
+                  const pokeData = await JSON.stringify({ data: dataArr });
                   await AsyncStorage.setItem('pokeData', pokeData);
                 } catch (error) {
                   // Error retrieving data
@@ -106,6 +108,21 @@ function LoginScreen({navigation}) {
         // Error retrieving data
         console.log(error.message);
       }
+
+      ReactNativeBiometrics.isSensorAvailable()
+        .then((resultObject) => {
+          const { available, biometryType } = resultObject
+
+          if (available && biometryType === ReactNativeBiometrics.TouchID) {
+            console.log('TouchID is supported')
+          } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+            console.log('FaceID is supported')
+          } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+            console.log('Biometrics is supported')
+          } else {
+            console.log('Biometrics not supported')
+          }
+        })
 
       let loggedIn = '';
       try {
@@ -181,7 +198,7 @@ function LoginScreen({navigation}) {
           }
 
           try {
-            const evoPokeData = await JSON.stringify({data: evoChains});
+            const evoPokeData = await JSON.stringify({ data: evoChains });
             await AsyncStorage.setItem('evoData', evoPokeData);
           } catch (error) {
             // Error retrieving data
@@ -235,7 +252,7 @@ function LoginScreen({navigation}) {
           }
 
           try {
-            const speciesData = await JSON.stringify({data: speciesArr});
+            const speciesData = await JSON.stringify({ data: speciesArr });
             await AsyncStorage.setItem('speciesData', speciesData);
           } catch (error) {
             // Error retrieving data
@@ -256,8 +273,8 @@ function LoginScreen({navigation}) {
     Alert.alert(
       'Failed',
       'Please try again with correct credentials.',
-      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-      {cancelable: false},
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false },
     );
 
   function loginValidate() {
@@ -273,7 +290,7 @@ function LoginScreen({navigation}) {
 
   return (
     // eslint-disable-next-line react-native/no-inline-styles
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Image
         source={images.poke_app_icon}
         // eslint-disable-next-line react-native/no-inline-styles
@@ -285,15 +302,15 @@ function LoginScreen({navigation}) {
       <Image
         source={images.pokedextext}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={{width: 300, height: 100, tintColor: '#da1b1b'}}
+        style={{ width: 300, height: 100, tintColor: '#da1b1b' }}
       />
       {/* <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'red', marginTop: 20, marginBottom: 10 }}>MY POKEDEX</Text> */}
 
       <Input
         placeholder="Email"
-        leftIcon={{type: 'materialIcons', name: 'email'}}
+        leftIcon={{ type: 'materialIcons', name: 'email' }}
         // eslint-disable-next-line react-native/no-inline-styles
-        containerStyle={{width: '80%', marginTop: 100}}
+        containerStyle={{ width: '80%', marginTop: 100 }}
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
@@ -301,9 +318,9 @@ function LoginScreen({navigation}) {
       <Input
         placeholder="Password"
         secureTextEntry={true}
-        leftIcon={{type: 'materialIcons', name: 'lock'}}
+        leftIcon={{ type: 'materialIcons', name: 'lock' }}
         // eslint-disable-next-line react-native/no-inline-styles
-        containerStyle={{width: '80%'}}
+        containerStyle={{ width: '80%' }}
         onChangeText={(text) => setPassword(text)}
         value={password}
       />
@@ -313,9 +330,9 @@ function LoginScreen({navigation}) {
         onPress={() => loginValidate()}
         raised={true}
         // eslint-disable-next-line react-native/no-inline-styles
-        containerStyle={{width: '70%', marginTop: 20}}
+        containerStyle={{ width: '70%', marginTop: 20 }}
         // eslint-disable-next-line react-native/no-inline-styles
-        buttonStyle={{backgroundColor: '#da1b1b'}}
+        buttonStyle={{ backgroundColor: '#da1b1b' }}
       />
     </View>
   );

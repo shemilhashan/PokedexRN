@@ -47,14 +47,14 @@ function HomeScreen({navigation}) {
       name: 'Pokedex',
       color: Colors.cardPokedex,
       fnToPress: () => {
-        navigation.navigate('Pokedex');
+        navigation.navigate('Pokedex',{showMyPokemon:false});
       },
     },
     {
       name: 'My Pokemon',
       color: Colors.cardMy,
       fnToPress: () => {
-        navigation.navigate('Mypokemon');
+        navigation.navigate('Pokedex',{showMyPokemon:true});
       },
     },
     {

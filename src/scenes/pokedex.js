@@ -43,26 +43,36 @@ const styles = StyleSheet.create({
   },
 });
 
-function PokedexScreen({ navigation }) {
+function PokedexScreen({ navigation, route }) {
+  const { showMyPokemon } = route.params
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [evoData, setEvoData] = useState([]);
   const [speciesData, setSpeciesData] = useState([]);
   const [searchText, setSearchText] = useState('');
-  const [likedData, setLikedData] = useState('');
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 === 0 ? '1%' : '4%', marginLeft: index % 2 === 0 ? '4%' : '1%', },]}
-      onPress={() => {
-        if (evoData.length > 0 && speciesData.length > 0) {
-          navigation.navigate('DetailsAlt', {
-            item: item,
-            allData: allData,
-            id: index + 1,
-            evoData: evoData,
-            speciesData: speciesData,
-            likedData: likedData,
-          });
+      onPress={async () => {
+        if (!showMyPokemon) {
+          if (evoData.length > 0 && speciesData.length > 0) {
+            var liked = []
+            let likedDataAsync =
+              (await AsyncStorage.getItem('likedData')) || 'none';
+            if (likedDataAsync && likedDataAsync !== 'none') {
+              let likedDataLoaded = JSON.parse(likedDataAsync);
+              liked = likedDataLoaded.data
+              console.log('liked: ', liked)
+            }
+            navigation.navigate('DetailsAlt', {
+              item: item,
+              allData: allData,
+              id: item.id,
+              evoData: evoData,
+              speciesData: speciesData,
+              likedData: liked,
+            });
+          }
         }
       }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -94,6 +104,10 @@ function PokedexScreen({ navigation }) {
     </TouchableOpacity>
   );
 
+  // async function loadLiked() {
+    
+  // }
+
   useEffect(() => {
     const getCachedData = async () => {
       try {
@@ -102,9 +116,29 @@ function PokedexScreen({ navigation }) {
         if (pokeData && pokeData !== 'none') {
           //set redux state if needed
           let pokeDataLoaded = JSON.parse(pokeData);
-          // console.log('pokeDataLoaded: ', pokeDataLoaded)
-          setData(pokeDataLoaded.data);
-          setAllData(pokeDataLoaded.data);
+          let pokeDataSave = pokeDataLoaded.data
+
+          if (showMyPokemon) {
+            navigation.setOptions({ title: 'My Pokemon' })
+            let likedDataAsync =
+              (await AsyncStorage.getItem('likedData')) || 'none';
+            if (likedDataAsync && likedDataAsync !== 'none') {
+              let likedDataLoaded = JSON.parse(likedDataAsync);
+              let likedDataSaved = likedDataLoaded.data
+              let newData = []
+              for (let i = 1; i < 152; i++) {
+                if (likedDataSaved.includes(i)){
+                  newData.push(pokeDataSave[i-1])
+                }
+              }
+              setData(newData);
+              setAllData(newData);
+            }
+          }
+          else {
+            setData(pokeDataSave);
+            setAllData(pokeDataSave);
+          }
         }
 
         let evoDataAsync = (await AsyncStorage.getItem('evoData')) || 'none';
@@ -124,18 +158,6 @@ function PokedexScreen({ navigation }) {
           let speciesDataLoaded = JSON.parse(speciesDataAsync);
           // console.log('speciesDataLoaded: ', speciesDataLoaded)
           setSpeciesData(speciesDataLoaded.data);
-        }
-
-        let likedDataAsync =
-          (await AsyncStorage.getItem('likedData')) || 'none';
-        // console.log('speciesData: ', speciesData)
-        if (likedDataAsync && likedDataAsync !== 'none') {
-          //set redux state if needed
-          let likedDataLoaded = JSON.parse(likedDataAsync);
-          // console.log('speciesDataLoaded: ', speciesDataLoaded)
-          setLikedData(likedDataLoaded.data);
-        } else {
-          setLikedData([]);
         }
       } catch (error) {
         // Error retrieving data
@@ -163,7 +185,7 @@ function PokedexScreen({ navigation }) {
     <View
       style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
       <SearchBar
-        placeholder="Search Pokemons"
+        placeholder={showMyPokemon?"Search My Pokemons":"Search Pokemons"}
         onChangeText={updateSearch}
         value={searchText}
         lightTheme

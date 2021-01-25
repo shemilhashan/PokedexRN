@@ -74,6 +74,7 @@ function LoginScreen({navigation}) {
                     });
                   }
                   dataArr.push({
+                    id:i+1,
                     name: result.results[i].name.capitalize(),
                     abilities: abilities,
                     stats: stats,

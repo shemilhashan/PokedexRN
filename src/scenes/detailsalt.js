@@ -10,6 +10,7 @@ import {
   Image,
   Easing,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 import { SwipeablePanel } from 'rn-swipeable-panel';
@@ -105,7 +106,7 @@ export default function DetailAltScreen({ navigation, route }) {
   const [enableList, setEnableList] = useState(true);
   const { width } = useWindowDimensions();
   const scrollX = useRef(new Animated.Value(0)).current;
-
+  const [likedData, setLikedData] = useState(route.params.likedData);
   const itemWidth = width * 0.65;
   const spacerWidth = (width - itemWidth) / 2;
   const refFlatList = useRef(null);
@@ -510,26 +511,26 @@ export default function DetailAltScreen({ navigation, route }) {
 
 
   function topContent() {
-
     function likeButton() {
-      const [likedData, setLikedData] = useState([]);
       function getLikedPokemon() {
         if (likedData.includes(currentId)) {
-          // console.log('getLikedPokemon: true');
           return true;
         } else {
-          // console.log('getLikedPokemon: false');
           return false;
         }
       }
 
       function likePokemon() {
         if (likedData.includes(currentId)) {
+          let liked = likedData
+          const indexLiked = liked.indexOf(currentId);
+          if (indexLiked > -1) {
+            liked.splice(indexLiked, 1);
+          }
+          setLikedData([...liked]);
         } else {
           let liked = likedData;
-          // console.log(liked);
           liked.push(currentId);
-          // console.log(liked);
           setLikedData([...liked]);
         }
       }
@@ -568,7 +569,14 @@ export default function DetailAltScreen({ navigation, route }) {
               <View style={{ flex: 1, alignContent: 'flex-start', justifyContent: 'flex-start', alignItems: 'flex-start', }}>
                 <TouchableOpacity
                   style={{ width: 60, height: '100%', justifyContent: 'center' }}
-                  onPress={() => {
+                  onPress={async () => {
+                    try {
+                      const likedDataStore = await JSON.stringify({data: likedData});
+                      await AsyncStorage.setItem('likedData', likedDataStore);
+                    } catch (error) {
+                      // Error retrieving data
+                      console.log(error.message);
+                    }
                     navigation.goBack();
                   }}>
                   <Image
@@ -612,7 +620,14 @@ export default function DetailAltScreen({ navigation, route }) {
               <View style={{ flex: 1, alignContent: 'flex-start', justifyContent: 'flex-start', alignItems: 'flex-start', }}>
                 <TouchableOpacity
                   style={{ width: 60, height: '100%', justifyContent: 'center' }}
-                  onPress={() => {
+                  onPress={async () => {
+                    try {
+                      const likedDataStore = await JSON.stringify({data: likedData});
+                      await AsyncStorage.setItem('likedData', likedDataStore);
+                    } catch (error) {
+                      // Error retrieving data
+                      console.log(error.message);
+                    }
                     navigation.goBack();
                   }}>
                   <Image

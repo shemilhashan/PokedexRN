@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     zIndex: 10,
+    fontFamily:'DMSans-Bold'
   },
 });
 

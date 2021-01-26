@@ -20,10 +20,10 @@ function Stats(props) {
     const baseList = dataLoaded.stats.map((stat) => {
         return (
             <View style={{ flexDirection: 'row', paddingLeft: 20, marginTop: 5, marginBottom: 5, }}>
-                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     {stat.name}
                 </Text>
-                <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     {stat.value}
                 </Text>
                 <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', alignContent: 'center', }}>
@@ -37,10 +37,10 @@ function Stats(props) {
     function otherStat(name, value) {
         return (
             <View style={{ flexDirection: 'row', paddingLeft: 20, marginTop: 5, marginBottom: 5, }}>
-                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     {name}
                 </Text>
-                <Text style={{ flex: 9, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 9, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     {value}
                 </Text>
                 <View style={{ width: 20, }}
@@ -61,10 +61,10 @@ function Stats(props) {
 
         return (
             <View style={{ flexDirection: 'row', paddingLeft: 20, marginTop: 5, marginBottom: 5, }}>
-                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 4, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     Total
           </Text>
-                <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey', }}>
+                <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold', marginRight: 5, color: 'grey',fontFamily:'DMSans-Bold' }}>
                     {total}
                 </Text>
                 <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', alignContent: 'center', }}>
@@ -77,12 +77,12 @@ function Stats(props) {
 
     return (
         <View style={[styles.scene, { backgroundColor: 'white', },]}>
-            <Text style={{ paddingLeft: 20, marginBottom: 10, marginTop: 20, fontWeight: 'bold', fontSize: 17, }}>
+            <Text style={{ paddingLeft: 20, marginBottom: 10, marginTop: 20, fontWeight: 'bold', fontSize: 17,fontFamily:'DMSans-Bold' }}>
                 Base Stats
         </Text>
             {baseList}
             {total()}
-            <Text style={{ paddingLeft: 20, marginBottom: 10, marginTop: 20, fontWeight: 'bold', fontSize: 17, }}>
+            <Text style={{ paddingLeft: 20, marginBottom: 10, marginTop: 20, fontWeight: 'bold', fontSize: 17,fontFamily:'DMSans-Bold' }}>
                 Other Stats
         </Text>
             {otherStat('Experience', dataLoaded.base_experience)}

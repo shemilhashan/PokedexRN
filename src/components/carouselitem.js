@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14,
+    fontFamily:'DMSans-Bold'
   },
   detailsBox: {
     width: screenWidth,

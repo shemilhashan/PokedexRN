@@ -73,8 +73,8 @@ function AccountScreen({ navigation }) {
 
     return (
       <View style={{ alignContent: 'flex-start', justifyContent: 'flex-start', width: '100%', marginBottom: 10, marginTop: 10,paddingLeft:40 }}>
-        <Text style={{color:'grey',fontSize:15,marginBottom:5}}>{label}</Text>
-        <Text style={{color:'black',fontSize:15,marginBottom:5}}>{value}</Text>
+        <Text style={{color:'grey',fontSize:15,marginBottom:5,fontFamily:'DMSans-Regular'}}>{label}</Text>
+        <Text style={{color:'black',fontSize:15,marginBottom:5,fontFamily:'DMSans-Regular'}}>{value}</Text>
       </View>
     )
   }

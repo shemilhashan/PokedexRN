@@ -18,7 +18,7 @@ function Evo(props) {
 
     return (
         <View style={[styles.scene, { backgroundColor: 'white', flexDirection: 'column', },]}>
-            <Text style={{ paddingLeft: 20, marginTop: 20, marginBottom: 0, color: 'black', fontWeight: 'bold', fontSize: 17, }}>
+            <Text style={{ paddingLeft: 20, marginTop: 20, marginBottom: 0, color: 'black', fontWeight: 'bold', fontSize: 17,fontFamily:'DMSans-Bold' }}>
                 Evolution Chain
         </Text>
             {!firstEvo ? (
@@ -33,7 +33,7 @@ function Evo(props) {
                         style={{ width: 100, height: 100,zIndex:2 }}
                         resizeMode="contain"
                     />
-                    <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                         {currentData.name}
                     </Text>
                 </View>
@@ -55,7 +55,7 @@ function Evo(props) {
                                     }}
                                     resizeMode="contain"
                                 />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                     {firstEvo.startName}
                                 </Text>
                             </View>
@@ -65,7 +65,7 @@ function Evo(props) {
                                     style={{ width: 50, height: 25, }}
                                     resizeMode="contain"
                                 />
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', }}>
+                                <Text style={{ fontSize: 15, fontWeight: 'bold',fontFamily:'DMSans-Bold' }}>
                                     Lvl. {firstEvo.levels}
                                 </Text>
                             </View>
@@ -80,7 +80,7 @@ function Evo(props) {
                                     style={{ width: 100, height: 100,zIndex:2 }}
                                     resizeMode="contain"
                                 />
-                                <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                     {firstEvo.endName}
                                 </Text>
                             </View>
@@ -98,7 +98,7 @@ function Evo(props) {
                                         style={{ width: 100, height: 100,zIndex:2 }}
                                         resizeMode="contain"
                                     />
-                                    <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
+                                    <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                         {secondEvo.startName}
                                     </Text>
                                 </View>
@@ -108,7 +108,7 @@ function Evo(props) {
                                         style={{ width: 50, height: 25, }}
                                         resizeMode="contain"
                                     />
-                                    <Text style={{ fontSize: 15, fontWeight: 'bold', }}>
+                                    <Text style={{ fontSize: 15, fontWeight: 'bold',fontFamily:'DMSans-Bold' }}>
                                         Lvl. {secondEvo.levels}
                                     </Text>
                                 </View>
@@ -123,7 +123,7 @@ function Evo(props) {
                                         style={{ width: 100, height: 100,zIndex:2 }}
                                         resizeMode="contain"
                                     />
-                                    <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                                    <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                         {secondEvo.endName}
                                     </Text>
                                 </View>

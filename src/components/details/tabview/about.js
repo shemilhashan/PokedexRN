@@ -53,19 +53,19 @@ function About(props) {
     const { allData, speciesData, currentId } = props
     return (
         <View style={[styles.scene, { backgroundColor: 'white', }]}>
-            <Text style={{ fontSize: 15, paddingLeft: 20, paddingRight: 20, marginTop: 30, fontWeight: '600', lineHeight: 30, }}>
+            <Text style={{ fontSize: 15, paddingLeft: 20, paddingRight: 20, marginTop: 30, fontWeight: '600', lineHeight: 30,fontFamily:'DMSans-Regular' }}>
                 {speciesData[currentId - 1].aboutText.replace('\n', ' ')}
             </Text>
             <View style={styles.tile}>
                 <View style={{ flex: 1, flexDirection: 'column', paddingLeft: 20, }}>
                     <View style={{ flex: 1, }} />
                     <View style={{ flex: 2, justifyContent: 'center', }}>
-                        <Text style={{ textAlign: 'left', color: 'grey', }}>
+                        <Text style={{ textAlign: 'left', color: 'grey',fontFamily:'DMSans-Regular' }}>
                             Height
             </Text>
                     </View>
                     <View style={{ flex: 2, justifyContent: 'center', }}>
-                        <Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 15, }}>
+                        <Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                             {getHeightConversions(allData[currentId - 1].height)}
                         </Text>
                     </View>
@@ -74,12 +74,12 @@ function About(props) {
                 <View style={{ flex: 1, flexDirection: 'column', }}>
                     <View style={{ flex: 1, }} />
                     <View style={{ flex: 2, justifyContent: 'center', }}>
-                        <Text style={{ textAlign: 'left', color: 'grey', }}>
+                        <Text style={{ textAlign: 'left', color: 'grey',fontFamily:'DMSans-Regular' }}>
                             Weight
             </Text>
                     </View>
                     <View style={{ flex: 2, justifyContent: 'center', }}>
-                        <Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 15, }}>
+                        <Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                             {getWeightConversions(allData[currentId - 1].weight)}
                         </Text>
                     </View>
@@ -87,11 +87,11 @@ function About(props) {
                 </View>
             </View>
             <View style={{ paddingLeft: 20, marginTop: 20, }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 15, }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 15,fontFamily:'DMSans-Bold' }}>
                     Breeding
         </Text>
                 <View style={{ flexDirection: 'row', marginBottom: 20, }}>
-                    <Text style={{ color: 'grey', marginRight: 20, fontSize: 15, width: 70, }}>
+                    <Text style={{ color: 'grey', marginRight: 20, fontSize: 15, width: 70,fontFamily:'DMSans-Regular' }}>
                         Gender
           </Text>
                     <View style={{ flexDirection: 'row', flex: 1, }}>
@@ -101,7 +101,7 @@ function About(props) {
                                 style={{ width: 20, height: 20, marginRight: 5 }}
                                 resizeMode="contain"
                             />
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                 {getMale(speciesData[currentId - 1].gender_rate)}
                             </Text>
                         </View>
@@ -111,17 +111,17 @@ function About(props) {
                                 style={{ width: 20, height: 20, marginRight: 5 }}
                                 resizeMode="contain"
                             />
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                                 {getFemale(speciesData[currentId - 1].gender_rate)}
                             </Text>
                         </View>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ color: 'grey', marginRight: 20, fontSize: 15, width: 70, }}>
+                    <Text style={{ color: 'grey', marginRight: 20, fontSize: 15, width: 70,fontFamily:'DMSans-Regular' }}>
                         Egg Type
           </Text>
-                    <Text style={{ flex: 1, justifyContent: 'flex-start', fontWeight: 'bold', fontSize: 15, }}>
+                    <Text style={{ flex: 1, justifyContent: 'flex-start', fontWeight: 'bold', fontSize: 15,fontFamily:'DMSans-Bold' }}>
                         {getEggTypes(speciesData[currentId - 1].egg_groups)}
                     </Text>
                 </View>

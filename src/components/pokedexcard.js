@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         color: 'white',
         fontWeight: 'bold',
+        fontFamily:'DMSans-Bold'
     },
     type: {
         fontSize: 15,
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 10,
         padding: 2,
+        fontFamily:'DMSans-Bold'
     },
 });
 function PokedexCard(props) {

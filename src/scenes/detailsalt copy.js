@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily:'DMSans-Bold'
   },
   item: {
     justifyContent: 'center',
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     height: 27,
     paddingLeft: 10,
     paddingRight: 10,
+    fontFamily:'DMSans-Bold'
   },
 });
 

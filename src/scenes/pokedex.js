@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   FlatList,
+  Image
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SearchBar } from 'react-native-elements';
 
 import PokedexCard from '../components/pokedexcard';
-
+import images from '../assets/images'
 
 function PokedexScreen({ navigation, route }) {
   const { showMyPokemon } = route.params
@@ -31,7 +32,17 @@ function PokedexScreen({ navigation, route }) {
           let pokeDataSave = pokeDataLoaded.data
 
           if (showMyPokemon) {
-            navigation.setOptions({ title: 'My Pokemon' })
+            navigation.setOptions({ 
+              title: 'My Pokemon',
+              headerStyle: {
+                backgroundColor: 'white',
+                elevation:0
+              },
+              headerTintColor: 'black',
+              headerTitleStyle: {
+              }, 
+              headerBackImage:()=> {return <Image source={images.backarrow} style={{width:40,height:20,tintColor:'black'}} resizeMode='contain'></Image>}
+            })
             let likedDataAsync =
               (await AsyncStorage.getItem('likedData')) || 'none';
             if (likedDataAsync && likedDataAsync !== 'none') {
@@ -48,6 +59,17 @@ function PokedexScreen({ navigation, route }) {
             }
           }
           else {
+            navigation.setOptions({ 
+              title: 'Pokedex',
+              headerStyle: {
+                backgroundColor: 'white',
+                elevation:0
+              },
+              headerTintColor: 'black',
+              headerTitleStyle: {
+              }, 
+              headerBackImage:()=> {return <Image source={images.backarrow} style={{width:40,height:20,tintColor:'black'}} resizeMode='contain'></Image>}
+            })
             setData(pokeDataSave);
             setAllData(pokeDataSave);
           }

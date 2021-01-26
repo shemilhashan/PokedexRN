@@ -6,21 +6,26 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
   Button
 } from 'react-native';
 
+import SplashScreen from 'react-native-splash-screen';
+
 import Navigator from './navigation'
 
 
 function App() {
-    return (
-      <Navigator>
-      </Navigator>
-    );
-  }
-  
-  export default App;
+  useEffect(()=>{
+    SplashScreen.hide()
+  })
+  return (
+    <Navigator>
+    </Navigator>
+  );
+}
+
+export default App;

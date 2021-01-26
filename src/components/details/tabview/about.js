@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import images from '../../../assets/images';
 const styles = StyleSheet.create({
     scene: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
         flexDirection: 'row',
-      },
+    },
 });
 function About(props) {
     function getHeightConversions(height) {

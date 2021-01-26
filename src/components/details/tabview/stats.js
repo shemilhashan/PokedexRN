@@ -1,30 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     scene: {
         flex: 1,
-    },
-    tile: {
-        marginTop: 20,
-        marginBottom: 10,
-        width: '90%',
-        height: 100,
-        borderRadius: 20,
-        marginRight: '5%',
-        marginLeft: '5%',
-        shadowColor: 'rgba(0,0,0, .4)', // IOS
-        shadowOffset: { height: 0, width: 1 }, // IOS
-        shadowOpacity: 1, // IOS
-        shadowRadius: 1, //IOS
-        elevation: 4, // Android,
-        overflow: 'hidden',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        flexDirection: 'row',
-    },
+    }
 });
 function Stats(props) {
-    const {allData,speciesData,currentId} = props
+    const { allData, speciesData, currentId } = props
     let dataLoaded = allData[currentId - 1];
     let speciesLoaded = speciesData[currentId - 1];
     function getProgress(stat, total) {

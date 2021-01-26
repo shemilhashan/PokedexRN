@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 import HomeScreen from '../scenes/home';
 import DetailsScreen from '../scenes/details';
@@ -8,7 +8,7 @@ import MypokemonScreen from '../scenes/mypokemon';
 import PokedexScreen from '../scenes/pokedex';
 import DetailAltScreen from '../scenes/detailsalt';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 export default function AppNavigator() {
   return (
@@ -26,7 +26,21 @@ export default function AppNavigator() {
       <Stack.Screen
         name="DetailsAlt"
         component={DetailAltScreen}
-        options={{headerShown: false}}
+        options={()=>({
+          headerShown: false,
+          gestureEnabled: false,
+          transitionSpec: {
+            open : { animation:'timing', config: { duration:0 } },
+            close : { animation:'timing', config: { duration:0 } },
+          },
+          cardStyleInterpolator:({current : { progress }}) => {
+            return {
+              cardStyle: {
+                opacity: progress,
+              }
+            }
+          }
+        })}
       />
       <Stack.Screen name="Account" component={AccountScreen} />
       <Stack.Screen name="Mypokemon" component={MypokemonScreen} />

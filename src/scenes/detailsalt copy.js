@@ -19,7 +19,6 @@ import images from '../assets/images';
 import CachedImage from '../components/cacheimage';
 import Tab from '../components/details/tabview/tab'
 
-import { SharedElement } from 'react-navigation-shared-element';
 
 const styles = StyleSheet.create({
   header: {
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function DetailAltScreen({ navigation, route }) {
+export default function DetailAltScreen({ navigation, route }) {
   const { id, allData, evoData, speciesData } = route.params;
   const [currentId, setCurrentId] = useState(id);
   const [idArr, setIdArr] = useState([]);
@@ -121,7 +120,7 @@ function DetailAltScreen({ navigation, route }) {
   });
   const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 
-
+  
 
   function Expanded() {
     setEnableList(!enableList);
@@ -386,15 +385,13 @@ function DetailAltScreen({ navigation, route }) {
             return (
               <Animated.View style={[styles.item, { transform: [{ scale }] }]} useNativeDriver={true}>
                 <View style={styles.imageWrapper}>
-                  <SharedElement id={`item.${currentId}.photo`}>
-                    <CachedImage
-                      uri={`${imgCommon}${currentId}.png`}
-                      resizeMethod="auto"
-                      resizeMode="contain"
-                      style={{ width: itemWidth, height: itemWidth }}
-                      useNativeDriver={true}
-                    />
-                  </SharedElement>
+                  <CachedImage
+                    uri={`${imgCommon}${currentId}.png`}
+                    resizeMethod="auto"
+                    resizeMode="contain"
+                    style={{ width: itemWidth, height: itemWidth }}
+                    useNativeDriver={true}
+                  />
                 </View>
                 <CachedImage
                   uri={`${imgCommon}${currentId}.png`}
@@ -413,10 +410,3 @@ function DetailAltScreen({ navigation, route }) {
     </View>
   );
 }
-
-DetailAltScreen.sharedElements = (route, otherRoute, showing) => {
-  const { allData } = route.params
-  return allData.map( item => `item.${item.id}.photo`)
-}
-
-export default DetailAltScreen;

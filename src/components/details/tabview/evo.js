@@ -30,7 +30,7 @@ function Evo(props) {
                     />
                     <Image
                         source={{ uri: `${imgCommon}${currentId}.png` }}
-                        style={{ width: 100, height: 100, }}
+                        style={{ width: 100, height: 100,zIndex:2 }}
                         resizeMode="contain"
                     />
                     <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
@@ -51,7 +51,7 @@ function Evo(props) {
                                 <Image
                                     source={{ uri: `${imgCommon}${firstEvo.start}.png` }}
                                     style={{
-                                        width: 100, height: 100,
+                                        width: 100, height: 100,zIndex:2
                                     }}
                                     resizeMode="contain"
                                 />
@@ -77,7 +77,7 @@ function Evo(props) {
                                 />
                                 <Image
                                     source={{ uri: `${imgCommon}${firstEvo.end}.png` }}
-                                    style={{ width: 100, height: 100, }}
+                                    style={{ width: 100, height: 100,zIndex:2 }}
                                     resizeMode="contain"
                                 />
                                 <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
@@ -95,7 +95,7 @@ function Evo(props) {
                                     />
                                     <Image
                                         source={{ uri: `${imgCommon}${secondEvo.start}.png` }}
-                                        style={{ width: 100, height: 100, }}
+                                        style={{ width: 100, height: 100,zIndex:2 }}
                                         resizeMode="contain"
                                     />
                                     <Text style={{ fontWeight: 'bold', fontSize: 15, }}>
@@ -120,7 +120,7 @@ function Evo(props) {
                                     />
                                     <Image
                                         source={{ uri: `${imgCommon}${secondEvo.end}.png` }}
-                                        style={{ width: 100, height: 100 }}
+                                        style={{ width: 100, height: 100,zIndex:2 }}
                                         resizeMode="contain"
                                     />
                                     <Text style={{ fontWeight: 'bold', fontSize: 15 }}>

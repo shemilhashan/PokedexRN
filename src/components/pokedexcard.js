@@ -4,6 +4,7 @@ import { View, TouchableOpacity, Text, Image, StyleSheet, Dimensions, } from 're
 import CachedImage from './cacheimage';
 import { getCardColor } from '../utils';
 import images from '../assets/images';
+import { SharedElement } from 'react-navigation-shared-element';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     tile: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     },
 });
 function PokedexCard(props) {
-    const { showMyPokemon, item, allData, evoData, speciesData,index,navigation } = props
+    const { showMyPokemon, item, allData, evoData, speciesData, index, navigation } = props
     return (
         <TouchableOpacity style={[styles.tile, { backgroundColor: getCardColor(item.types[0].name), marginRight: index % 2 === 0 ? '1%' : '4%', marginLeft: index % 2 === 0 ? '4%' : '1%', },]}
             onPress={async () => {
@@ -78,11 +79,13 @@ function PokedexCard(props) {
                 <View style={{ flex: 3, justifyContent: 'center', alignContent: 'center', }}>
                     <Image source={images.pokeball} resizeMode="contain" style={{ position: 'absolute', height: 100, width: 100, tintColor: 'white', opacity: 0.2, top: 10, marginLeft: 10, zIndex: 1, }}
                     />
-                    <CachedImage
-                        uri={item.imgUrl}
-                        style={{ width: '100%', height: '100%', zIndex: 2, }}
-                        resizeMode="contain"
-                    />
+                    <SharedElement id={`item.${index+1}.photo`} style={{zIndex:2}}>
+                        <CachedImage
+                            uri={item.imgUrl}
+                            style={{ width: '100%', height: '100%', zIndex: 2, }}
+                            resizeMode="contain"
+                        />
+                    </SharedElement>
                 </View>
             </View>
         </TouchableOpacity>

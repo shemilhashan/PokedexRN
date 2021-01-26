@@ -116,12 +116,16 @@ function LoginScreen({ navigation }) {
       //     const { available, biometryType } = resultObject
 
       //     if (available && biometryType === ReactNativeBiometrics.TouchID) {
+      //       createAlertBio('Bio','TouchID')
       //       console.log('TouchID is supported')
       //     } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+      //       createAlertBio('Bio','FaceID')
       //       console.log('FaceID is supported')
       //     } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+      //       createAlertBio('Bio','Biometrics')
       //       console.log('Biometrics is supported')
       //     } else {
+      //       createAlertBio('No Bio','Failed')
       //       console.log('Biometrics not supported')
       //     }
       //   })
@@ -270,6 +274,14 @@ function LoginScreen({ navigation }) {
     evolutions();
     species();
   });
+
+  // const createAlertBio = (title,text) =>
+  //   Alert.alert(
+  //     title,
+  //     text,
+  //     [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+  //     { cancelable: false },
+  //   );
 
   const createAlert = () =>
     Alert.alert(

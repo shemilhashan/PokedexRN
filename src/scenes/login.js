@@ -7,7 +7,7 @@ import images from '../assets/images';
 import { Input } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 
-import ReactNativeBiometrics from 'react-native-biometrics'
+// import ReactNativeBiometrics from 'react-native-biometrics'
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
@@ -22,6 +22,8 @@ function LoginScreen({ navigation }) {
     try {
       await AsyncStorage.setItem('loggedIn', 'true');
       await AsyncStorage.setItem('userEmail', email);
+      setEmail('');
+      setPassword('');
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -109,20 +111,20 @@ function LoginScreen({ navigation }) {
         console.log(error.message);
       }
 
-      ReactNativeBiometrics.isSensorAvailable()
-        .then((resultObject) => {
-          const { available, biometryType } = resultObject
+      // ReactNativeBiometrics.isSensorAvailable()
+      //   .then((resultObject) => {
+      //     const { available, biometryType } = resultObject
 
-          if (available && biometryType === ReactNativeBiometrics.TouchID) {
-            console.log('TouchID is supported')
-          } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
-            console.log('FaceID is supported')
-          } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
-            console.log('Biometrics is supported')
-          } else {
-            console.log('Biometrics not supported')
-          }
-        })
+      //     if (available && biometryType === ReactNativeBiometrics.TouchID) {
+      //       console.log('TouchID is supported')
+      //     } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+      //       console.log('FaceID is supported')
+      //     } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+      //       console.log('Biometrics is supported')
+      //     } else {
+      //       console.log('Biometrics not supported')
+      //     }
+      //   })
 
       let loggedIn = '';
       try {
@@ -280,8 +282,6 @@ function LoginScreen({ navigation }) {
   function loginValidate() {
     if (email === 'shem@s.com' && password === 'Ddf1') {
       saveLogin();
-      setEmail('');
-      setPassword('');
       navigation.navigate('App');
     } else {
       createAlert();

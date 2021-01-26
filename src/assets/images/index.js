@@ -8,6 +8,7 @@ const images = {
   male: require('./male.png'),
   female: require('./female.png'),
   frontarrow: require('./frontarrow.png'),
+  account: require('./account.jpg'),
 };
 
 export default images;

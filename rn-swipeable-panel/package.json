@@ -1,0 +1,133 @@
+{
+  "_from": "rn-swipeable-panel",
+  "_id": "rn-swipeable-panel@1.2.5",
+  "_inBundle": false,
+  "_integrity": "sha512-abgBI8lbvlU4M5MKQrx/1sFR7yKJjvC1M377xaDCq7S1ZDGkVF/wghRwq4aA+w8ehYKtY6q3dfuZucz9uIGhYg==",
+  "_location": "/rn-swipeable-panel",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "rn-swipeable-panel",
+    "name": "rn-swipeable-panel",
+    "escapedName": "rn-swipeable-panel",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/",
+    "/rn-swipeable-panel"
+  ],
+  "_resolved": "https://registry.npmjs.org/rn-swipeable-panel/-/rn-swipeable-panel-1.2.5.tgz",
+  "_shasum": "a531046a27e21e67b0afae987f9b90e911b20b99",
+  "_spec": "rn-swipeable-panel",
+  "_where": "C:\\Users\\SHEMIL\\Documents\\CodeChallenges\\Pokedex",
+  "author": {
+    "name": "Enes Ozturk"
+  },
+  "bugs": {
+    "url": "https://github.com/enesozturk/rn-swipeable-panel/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "enesozturk",
+      "email": "enesozturk.d@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "rn-swipeable-panel": "^1.2.3"
+  },
+  "deprecated": false,
+  "description": "Swipeable bottom panel for react native",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^12.12.38",
+    "@types/react": "^16.9.46",
+    "@types/react-dom": "^16.9.7",
+    "@types/react-native": "^0.63.7",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "gh-pages": "^2.2.0",
+    "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.7.5"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://github.com/enesozturk/rn-swipeable-panel",
+  "keywords": [
+    "react",
+    "react native",
+    "react-native-component",
+    "mobile",
+    "ios",
+    "android",
+    "swipeable",
+    "panel",
+    "swipeable-panel",
+    "swipe-up",
+    "swipe-down",
+    "bottom",
+    "bottom-panel",
+    "bottom-up",
+    "bottom-up-panel"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "name": "rn-swipeable-panel",
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-native": "^0.62.2"
+  },
+  "react-native": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enesozturk/rn-swipeable-panel.git"
+  },
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "deploy": "gh-pages -d example/build",
+    "predeploy": "cd example && npm install && npm run build",
+    "prepare": "run-s build",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "test": "run-s test:unit test:lint test:build",
+    "test:build": "run-s build",
+    "test:lint": "eslint .",
+    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom"
+  },
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "version": "1.2.5"
+}
